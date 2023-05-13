@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data </title>
+</head>
+<body>
+
+        <h1>Fetch real-time data</h1> 
+        <p>
+            latitude: <span id="lat"></span><br>
+            longitude: <span id="lon"></span>
+        </p>
+
+    <script>
+        
+         const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
+         
+        async function getISS(){
+
+            try{
+            const response = await fetch(api_url);
+                if (!response.ok) {
+                 throw new Error("Network response was not OK");
+               }  
+
+            const data = await response.json();
+            const {latitude, longitude} = data;
+        
+            document.getElementById('lat').textContent = latitude;
+            document.getElementById('lon').textContent = longitude;
+        } 
+        
+        catch(error){
+            console.error("There has been a problem with your fetch operation:", error);
+        }
+        
+    
+    }
+
+        getISS();
+
+        setInterval(getISS, 10000);
+
+        
+
+
+    </script>
+    
+</body>
+</html>
