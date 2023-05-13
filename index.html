@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Data Fetching</title>
+  <style>
+    /* Add CSS styles for the visually appealing display */
+    /* ... */
+  </style>
+</head>
+<body>
+
+
+  <h1>Real-time Data</h1>
+  <div id="dataContainer">
+    <!-- Data fetched from the API will be displayed here -->
+  </div>
+
+  <script>
+    function mjFetchData() {
+      // Make AJAX request to the backend endpoint
+      // Replace 'API_ENDPOINT' with the actual URL of your backend API
+      fetch('http://api.weatherapi.com/v1/current.json?key=ac4edb47de784f89ba3224429231205&q=Philippines&aqi=no')
+        .then(response => response.json())
+        .then(data => {
+          // Process the received data as needed
+          // ...
+
+          // Update the HTML elements with the fetched data
+          const dataLocation = document.getElementById('dataLocation');
+          const dataCondition = document.getElementById('dataCondition');
+          const dataCurrent = document.getElementById('dataCurrent');
+          
+
+
+          //const dataRep = JSON.stringify(data); // Example: Display the data as a string
+
+          dataLocation.innerHTML = JSON.stringify(data.location.name + ' ' +data.location.country);
+
+          dataCondition.innerHTML = JSON.parse(JSON.stringify('<img src=\"https:'+data.current.condition.icon+'\" />'));
+          
+          dataCurrent.innerHTML = JSON.stringify(data.current);
+        })
+        .catch(error => {
+          // Handle errors or exceptions that occur during data retrieval or processing
+          console.error('Error:', error);
+          // Display an error message or take any necessary actions
+          // ...
+        });
+    }
+
+    // Call the fetchData function initially to display the data
+    mjFetchData();
+
+    // Set the interval to fetch data every 10 seconds (10000 milliseconds)
+    setInterval(mjFetchData, 10000);
+  </script>
+  
+  <div id="dataLocation"></div>
+  <br />
+  <div id="dataCondition"></div>
+  <br />
+  <div id="dataCurrent"></div>
+</body>
+</html>
