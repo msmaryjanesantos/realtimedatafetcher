@@ -3,16 +3,47 @@
 <head>
   <title>Real-time Data Fetching</title>
   <style>
-    /* Add CSS styles for the visually appealing display */
-    /* ... */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #dataContainer {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #dataLocation {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    #dataCondition img {
+      max-width: 100px;
+    }
+
+    #dataCurrent {
+      font-size: 18px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-
-
-  <h1>Real-time Data</h1>
+  <h1>Real-time Data Weather Condition</h1>
   <div id="dataContainer">
-    <!-- Data fetched from the API will be displayed here -->
+    <div id="dataLocation"></div>
+    <div id="dataCondition"></div>
+    <div id="dataCurrent"></div>
   </div>
 
   <script>
@@ -29,15 +60,11 @@
           const dataLocation = document.getElementById('dataLocation');
           const dataCondition = document.getElementById('dataCondition');
           const dataCurrent = document.getElementById('dataCurrent');
-          
 
+          dataLocation.innerHTML = JSON.stringify(data.location.name + ' ' + data.location.country);
 
-          //const dataRep = JSON.stringify(data); // Example: Display the data as a string
+          dataCondition.innerHTML = JSON.parse(JSON.stringify('<img src=\"https:' + data.current.condition.icon + '\" />'));
 
-          dataLocation.innerHTML = JSON.stringify(data.location.name + ' ' +data.location.country);
-
-          dataCondition.innerHTML = JSON.parse(JSON.stringify('<img src=\"https:'+data.current.condition.icon+'\" />'));
-          
           dataCurrent.innerHTML = JSON.stringify(data.current);
         })
         .catch(error => {
@@ -54,11 +81,5 @@
     // Set the interval to fetch data every 10 seconds (10000 milliseconds)
     setInterval(mjFetchData, 10000);
   </script>
-  
-  <div id="dataLocation"></div>
-  <br />
-  <div id="dataCondition"></div>
-  <br />
-  <div id="dataCurrent"></div>
 </body>
 </html>
